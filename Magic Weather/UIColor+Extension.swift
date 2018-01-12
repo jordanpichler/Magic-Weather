@@ -14,4 +14,5 @@ extension UIColor {
     static let snow = #colorLiteral(red: 0.748281029, green: 0.9034805948, blue: 0.9758662581, alpha: 1)
     static let cloudy = #colorLiteral(red: 0.8167432698, green: 0.8743398104, blue: 0.9195352157, alpha: 1)
     static let windy = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+	
 }
