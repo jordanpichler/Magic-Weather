@@ -1,0 +1,6 @@
+framework module Pods_Magic_Weather_Stage {
+  umbrella header "Pods-Magic Weather Stage-umbrella.h"
+
+  export *
+  module * { export * }
+}
