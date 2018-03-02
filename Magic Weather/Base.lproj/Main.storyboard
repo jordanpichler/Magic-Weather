@@ -223,9 +223,6 @@
                                 <state key="normal" title="Snow">
                                     <color key="titleColor" red="0.74828102900000004" green="0.90348059479999998" blue="0.97586625810000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="snowbutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vSg-A3-0Qu"/>
-                                </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nsj-bg-vma" userLabel="Test_Sun">
                                 <rect key="frame" x="348" y="58" width="46" height="30"/>
@@ -233,17 +230,6 @@
                                 <state key="normal" title="Sun">
                                     <color key="titleColor" red="0.99975138900000005" green="0.88433665039999998" blue="0.26351124050000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="sunbutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lcj-tQ-UPN"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oe0-5V-e8G" userLabel="Test_Rain">
-                                <rect key="frame" x="348" y="92" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Rain"/>
-                                <connections>
-                                    <action selector="rainbutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vwh-SQ-m1e"/>
-                                </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVf-c1-inQ" userLabel="Test_Wind">
                                 <rect key="frame" x="28" y="58" width="46" height="30"/>
@@ -251,9 +237,6 @@
                                 <state key="normal" title="Wind">
                                     <color key="titleColor" red="0.46666666870000001" green="0.76470589639999997" blue="0.26666668059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="windbutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uua-cB-C8B"/>
-                                </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xza-Zi-GeO" userLabel="Test_Cloudy">
                                 <rect key="frame" x="20" y="25" width="62" height="30"/>
@@ -261,9 +244,6 @@
                                 <state key="normal" title="Cloudy">
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="cloudybutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oaa-lI-7Xf"/>
-                                </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fTA-8v-phT" userLabel="Test_Clear">
                                 <rect key="frame" x="28" y="92" width="46" height="30"/>
@@ -271,9 +251,6 @@
                                 <state key="normal" title="Clear">
                                     <color key="titleColor" red="1" green="0.0" blue="0.15923816120000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <action selector="clear:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6HJ-ME-cO8"/>
-                                </connections>
                             </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAz-q0-fcN" userLabel="Test_Fetch Data">
                                 <rect key="frame" x="95" y="49" width="225" height="49"/>
@@ -296,6 +273,24 @@
                                     <action selector="didSelectLayerAmount:" destination="BYZ-38-t0r" eventType="valueChanged" id="Vne-jH-DlA"/>
                                 </connections>
                             </segmentedControl>
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="eej-dm-TPq">
+                                <rect key="frame" x="321" y="92" width="73" height="90"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aKa-IC-ek1" userLabel="Test_Rain_LOT">
+                                        <rect key="frame" x="0.0" y="0.0" width="73" height="30"/>
+                                        <state key="normal" title="Rain (LOT)"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vz6-U7-Jo0" userLabel="Test_Rain_UIV">
+                                        <rect key="frame" x="0.0" y="30" width="73" height="30"/>
+                                        <state key="normal" title="Rain (UIV)"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOq-j0-eY7" userLabel="Test_Rain_CA">
+                                        <rect key="frame" x="0.0" y="60" width="73" height="30"/>
+                                        <state key="normal" title="Rain (CA)"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>

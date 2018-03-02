@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_0" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -18,17 +18,17 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xFX-88-FfB">
-                                <rect key="frame" x="16" y="30" width="288" height="20.5"/>
+                                <rect key="frame" x="20" y="30" width="374" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eJH-OS-UT4" userLabel="Decorator Line">
-                                <rect key="frame" x="135" y="60" width="50" height="1"/>
+                                <rect key="frame" x="182" y="60" width="50" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="h7a-FD-FpO"/>
@@ -36,31 +36,31 @@
                                 </constraints>
                             </view>
                             <view alpha="0.75" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xXc-XO-PPr">
-                                <rect key="frame" x="16" y="151" width="288" height="270"/>
+                                <rect key="frame" x="20" y="151" width="374" height="270"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="270" id="vqC-0h-xsY"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="oho-Ca-z0E">
-                                <rect key="frame" x="26" y="302" width="278" height="241"/>
+                                <rect key="frame" x="30" y="470" width="364" height="241"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="29°" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yN6-5F-3Bn">
-                                        <rect key="frame" x="0.0" y="0.0" width="117" height="95.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="116.66666666666667" height="95.666666666666671"/>
                                         <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="80"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="bCV-DK-yic">
-                                        <rect key="frame" x="0.0" y="95.5" width="102.5" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="95.666666666666629" width="102" height="20.333333333333329"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lo -9°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TnT-80-FxV" userLabel="Low Temperature">
-                                                <rect key="frame" x="0.0" y="0.0" width="48" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="47.666666666666664" height="20.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hi 1°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oKg-ZD-OEf" userLabel="High Temperature">
-                                                <rect key="frame" x="68" y="0.0" width="34.5" height="20.5"/>
+                                                <rect key="frame" x="67.666666666666671" y="0.0" width="34.333333333333329" height="20.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -68,7 +68,7 @@
                                         </subviews>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sunshine, wo-ooh!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NWa-SP-wfp">
-                                        <rect key="frame" x="0.0" y="116" width="174.5" height="50"/>
+                                        <rect key="frame" x="0.0" y="116" width="174.66666666666666" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="Jpz-ba-8vE"/>
                                         </constraints>
@@ -85,7 +85,7 @@
                                         </constraints>
                                     </view>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" ambiguous="YES" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rms-W0-Vmh" userLabel="Forecast Scroll View" customClass="SSFadingScrollView">
-                                        <rect key="frame" x="0.0" y="181" width="268" height="60"/>
+                                        <rect key="frame" x="0.0" y="181" width="354" height="60"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="W99-c7-ff0">
                                                 <rect key="frame" x="0.0" y="0.0" width="580" height="60"/>
@@ -218,21 +218,21 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GXZ-Jk-ii8" userLabel="Test_Snow">
-                                <rect key="frame" x="276" y="30" width="38" height="30"/>
+                                <rect key="frame" x="366" y="30" width="38" height="30"/>
                                 <state key="normal" title="Snow">
                                     <color key="titleColor" red="0.74828102900000004" green="0.90348059479999998" blue="0.97586625810000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="snowbutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vSg-A3-0Qu"/>
+                                    <action selector="snowbutton" destination="BYZ-38-t0r" eventType="touchUpInside" id="EO7-vr-NXM"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nsj-bg-vma" userLabel="Test_Sun">
-                                <rect key="frame" x="284" y="70" width="30" height="30"/>
+                                <rect key="frame" x="374" y="70" width="30" height="30"/>
                                 <state key="normal" title="Sun">
                                     <color key="titleColor" red="0.99975138900000005" green="0.88433665039999998" blue="0.26351124050000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="sunbutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lcj-tQ-UPN"/>
+                                    <action selector="sunbutton" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kmu-Ny-eBF"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVf-c1-inQ" userLabel="Test_Wind">
@@ -241,7 +241,7 @@
                                     <color key="titleColor" red="0.46666666870000001" green="0.76470589639999997" blue="0.26666668059999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="windbutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uua-cB-C8B"/>
+                                    <action selector="windbutton" destination="BYZ-38-t0r" eventType="touchUpInside" id="a62-xj-NYY"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xza-Zi-GeO" userLabel="Test_Cloudy">
@@ -250,11 +250,11 @@
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="cloudybutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oaa-lI-7Xf"/>
+                                    <action selector="cloudybutton" destination="BYZ-38-t0r" eventType="touchUpInside" id="RVL-Tt-RmV"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAz-q0-fcN" userLabel="Test_Fetch Data">
-                                <rect key="frame" x="122.5" y="60" width="75" height="30"/>
+                                <rect key="frame" x="169.66666666666666" y="60" width="75" height="30"/>
                                 <state key="normal" title="Fetch Data">
                                     <color key="titleColor" red="1" green="0.6005305648" blue="0.39455956219999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -268,18 +268,37 @@
                                     <color key="titleColor" red="1" green="0.0" blue="0.15923816120000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="clear:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6HJ-ME-cO8"/>
+                                    <action selector="clear" destination="BYZ-38-t0r" eventType="touchUpInside" id="cB2-M3-dmj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oe0-5V-e8G" userLabel="Test_Rain">
-                                <rect key="frame" x="284" y="110" width="30" height="30"/>
-                                <state key="normal" title="Rain"/>
-                                <connections>
-                                    <action selector="rainbutton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vwh-SQ-m1e"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="EQJ-fk-Xgx">
+                                <rect key="frame" x="331" y="110" width="73" height="90"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oe0-5V-e8G" userLabel="Test_Rain_LOT">
+                                        <rect key="frame" x="0.0" y="0.0" width="73" height="30"/>
+                                        <state key="normal" title="Rain (LOT)"/>
+                                        <connections>
+                                            <action selector="rainbutton" destination="BYZ-38-t0r" eventType="touchUpInside" id="aim-Zo-orP"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ead-kK-Drc" userLabel="Test_Rain_UIV">
+                                        <rect key="frame" x="0.0" y="30" width="73" height="30"/>
+                                        <state key="normal" title="Rain (CA)"/>
+                                        <connections>
+                                            <action selector="rainCaButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="d1n-3J-cGa"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AV9-sQ-pFh" userLabel="Test_Rain_CA">
+                                        <rect key="frame" x="0.0" y="60" width="73" height="30"/>
+                                        <state key="normal" title="Rain (UIV)"/>
+                                        <connections>
+                                            <action selector="rainUivButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="wVX-iQ-zqR"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="NHK-3O-a7I">
-                                <rect key="frame" x="104" y="98" width="113" height="29"/>
+                                <rect key="frame" x="150.66666666666666" y="98" width="112.99999999999997" height="29"/>
                                 <segments>
                                     <segment title="1"/>
                                     <segment title="20"/>
@@ -294,17 +313,18 @@
                         <constraints>
                             <constraint firstItem="eJH-OS-UT4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0cD-iF-oIw"/>
                             <constraint firstItem="fTA-8v-phT" firstAttribute="leading" secondItem="HVf-c1-inQ" secondAttribute="leading" id="7jS-0J-HbA"/>
-                            <constraint firstItem="oe0-5V-e8G" firstAttribute="trailing" secondItem="nsj-bg-vma" secondAttribute="trailing" id="7vn-K9-B3E"/>
                             <constraint firstItem="oho-Ca-z0E" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="8kO-j3-iLo"/>
                             <constraint firstItem="xXc-XO-PPr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Br8-tH-iOI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xFX-88-FfB" secondAttribute="trailing" id="CTn-YR-2c9"/>
                             <constraint firstItem="xza-Zi-GeO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="Hst-BN-3oo"/>
                             <constraint firstItem="xXc-XO-PPr" firstAttribute="top" secondItem="eJH-OS-UT4" secondAttribute="bottom" constant="90" id="KTc-5f-ycv"/>
-                            <constraint firstItem="oe0-5V-e8G" firstAttribute="top" secondItem="nsj-bg-vma" secondAttribute="bottom" constant="10" id="Kmd-7u-sg0"/>
+                            <constraint firstItem="GXZ-Jk-ii8" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="LNA-an-JAO"/>
                             <constraint firstItem="HVf-c1-inQ" firstAttribute="top" secondItem="xza-Zi-GeO" secondAttribute="bottom" constant="10" id="LSK-eC-wUH"/>
                             <constraint firstItem="nsj-bg-vma" firstAttribute="top" secondItem="GXZ-Jk-ii8" secondAttribute="bottom" constant="10" id="M78-iw-0ib"/>
                             <constraint firstItem="eJH-OS-UT4" firstAttribute="top" secondItem="xFX-88-FfB" secondAttribute="bottom" constant="10" id="MPf-ni-unl"/>
                             <constraint firstItem="NHK-3O-a7I" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MfH-U6-YyI"/>
+                            <constraint firstItem="nsj-bg-vma" firstAttribute="top" secondItem="GXZ-Jk-ii8" secondAttribute="bottom" constant="10" id="QKg-3S-22H"/>
+                            <constraint firstItem="GXZ-Jk-ii8" firstAttribute="trailing" secondItem="EQJ-fk-Xgx" secondAttribute="trailing" id="SO5-zr-mG7"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="oho-Ca-z0E" secondAttribute="bottom" constant="25" id="WFo-eB-wkg"/>
                             <constraint firstItem="hAz-q0-fcN" firstAttribute="top" secondItem="eJH-OS-UT4" secondAttribute="top" id="Web-Do-rsq"/>
                             <constraint firstItem="xFX-88-FfB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="30" id="dwT-0e-SC4"/>
@@ -312,6 +332,8 @@
                             <constraint firstAttribute="trailingMargin" secondItem="oho-Ca-z0E" secondAttribute="trailing" id="gL1-sA-wuc"/>
                             <constraint firstItem="xXc-XO-PPr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="l2M-B5-ejl"/>
                             <constraint firstItem="GXZ-Jk-ii8" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="l95-3V-jSo"/>
+                            <constraint firstItem="nsj-bg-vma" firstAttribute="trailing" secondItem="EQJ-fk-Xgx" secondAttribute="trailing" id="nJC-Mb-7cV"/>
+                            <constraint firstItem="EQJ-fk-Xgx" firstAttribute="top" secondItem="nsj-bg-vma" secondAttribute="bottom" constant="10" id="qVj-Mh-9mX"/>
                             <constraint firstItem="fTA-8v-phT" firstAttribute="top" secondItem="HVf-c1-inQ" secondAttribute="bottom" constant="10" id="qeB-Ou-Ktk"/>
                             <constraint firstItem="hAz-q0-fcN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rte-9T-txJ"/>
                             <constraint firstItem="GXZ-Jk-ii8" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="10" id="vVD-wX-9LO"/>

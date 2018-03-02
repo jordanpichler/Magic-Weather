@@ -27,27 +27,14 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var dayForecastView: UIScrollView!
     @IBOutlet weak var weatherAnimationView: UIView!
 
-    @IBAction func snowbutton(_ sender: Any) {
-        self.displaySnow()
-    }
-    @IBAction func sunbutton(_ sender: Any) {
-        self.displaySun()
-    }
-    
-    @IBAction func rainbutton(_ sender: Any) {
-        self.displayRain()
-    }
-   
-    @IBAction func cloudybutton(_ sender: Any) {
-        self.displayRainUiView()
-    }
-    @IBAction func windbutton(_ sender: Any) {
-        self.displayRainCoreAnimation()
-    }
-    
-    @IBAction func clear(_ sender: Any) {
-        self.clearAnimationView()
-    }
+    @IBAction func snowbutton() { displaySnow() }
+    @IBAction func sunbutton() { displaySun() }
+    @IBAction func rainbutton() { displayRain() }
+    @IBAction func rainUivButton() { displayRainUiView() }
+    @IBAction func rainCaButton() { displayRainCoreAnimation() }
+    @IBAction func cloudybutton() { displayCloudy() }
+    @IBAction func windbutton() { displayWind() }
+    @IBAction func clear() { clearAnimationView() }
     
     @IBOutlet var labelForDay: [UILabel]!
 
@@ -71,7 +58,7 @@ class WeatherViewController: UIViewController {
 	// MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
-
+		
 		// Prepare labels for animation
         summaryLabel.transform = CGAffineTransform(translationX: 30, y: 0)
         temperatureLabel.transform = CGAffineTransform(translationX: 30, y: 0)
