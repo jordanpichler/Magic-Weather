@@ -19,9 +19,17 @@ struct Forecast {
     let tempHigh: Float?
     let identifier: Icon?
     let timestamp: Date
-    
-    
-    init(summary: String, temperature: Float, humidity: Float, windspeed: Float, winddirection: Float?, tempLow: Float?, tempHigh: Float?, identifier: Icon?, timestamp: Date) {
+	
+    init(summary: String,
+		 temperature: Float,
+		 humidity: Float,
+		 windspeed: Float,
+		 winddirection: Float?,
+		 tempLow: Float?,
+		 tempHigh: Float?,
+		 identifier: Icon?,
+		 timestamp: Date) {
+		
         self.summary = summary
         self.temperature = temperature
         self.humidity = humidity

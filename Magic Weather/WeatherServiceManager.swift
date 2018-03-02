@@ -67,20 +67,12 @@ class WeatherServiceManager: NSObject {
                     }
                     // Following 5 indices are the following 5 day forecasts
                     completion(foreCastArray)
-                    
-                    
-                    
+
                 case .failure(let error):
                     print("uh oh we got an error: \(error.localizedDescription)")
                     
                 }
             }
-            
         }
-        
-        
-        
-    
-       
     }
 }
