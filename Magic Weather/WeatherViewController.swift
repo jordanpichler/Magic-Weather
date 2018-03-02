@@ -10,15 +10,18 @@ import UIKit
 import Lottie
 import ForecastIO
 import Dance
+import Cartography
 
 class WeatherViewController: UIViewController {
 
+	// MARK: - Outlets, Properties -
+	
     let weatherManager = WeatherServiceManager()
 
     @IBOutlet weak var LowHighTemps: UIStackView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var summarayLabel: UILabel!
+    @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var tempLowLabel: UILabel!
     @IBOutlet weak var tempHighLabel: UILabel!
     @IBOutlet weak var dayForecastView: UIScrollView!
@@ -36,10 +39,10 @@ class WeatherViewController: UIViewController {
     }
    
     @IBAction func cloudybutton(_ sender: Any) {
-        self.displayCloudy()
+        self.displayRainUiView()
     }
     @IBAction func windbutton(_ sender: Any) {
-        self.displayWind()
+        self.displayRainCoreAnimation()
     }
     
     @IBAction func clear(_ sender: Any) {
@@ -51,37 +54,48 @@ class WeatherViewController: UIViewController {
     @IBOutlet var iconForDay: [UIImageView]!
     
     var lottieAnimationView: LOTAnimationView?
-    
-   
-    // enum!
-    let icons: Dictionary<String, UIImage> = ["clear-day": #imageLiteral(resourceName: "Sun"), "clear-night": #imageLiteral(resourceName: "Sun"), "rain": #imageLiteral(resourceName: "Rain"), "snow": #imageLiteral(resourceName: "snowflake-2"), "cloudy": #imageLiteral(resourceName: "Cloudy"), "fog": #imageLiteral(resourceName: "Cloud"),"partly-cloudy-day": #imageLiteral(resourceName: "PartlyCloudy"), "partly-cloudy-night": #imageLiteral(resourceName: "PartlyCloudy"), "wind": #imageLiteral(resourceName: "Cloud"), "sleet": #imageLiteral(resourceName: "Rain"),]
-    
+	
+	private var layerCount = 0
+    private var neededLayers = 1
+    // Make enum!
+    let icons: Dictionary<String, UIImage> = ["clear-day": #imageLiteral(resourceName: "Sun"),
+											  "clear-night": #imageLiteral(resourceName: "Sun"),
+											  "rain": #imageLiteral(resourceName: "droplets"), "snow": #imageLiteral(resourceName: "snowflake-2"),
+											  "cloudy": #imageLiteral(resourceName: "Cloudy"),
+											  "fog": #imageLiteral(resourceName: "Cloud"),
+											  "partly-cloudy-day": #imageLiteral(resourceName: "PartlyCloudy"),
+											  "partly-cloudy-night": #imageLiteral(resourceName: "PartlyCloudy"),
+											  "wind": #imageLiteral(resourceName: "Cloud"),
+											  "sleet": #imageLiteral(resourceName: "droplets"),]
+	
+	// MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        summarayLabel.transform = CGAffineTransform(translationX: 30, y: 0)
+		// Prepare labels for animation
+        summaryLabel.transform = CGAffineTransform(translationX: 30, y: 0)
         temperatureLabel.transform = CGAffineTransform(translationX: 30, y: 0)
         LowHighTemps.transform = CGAffineTransform(translationX: 30, y: 0)
         dayForecastView.transform = CGAffineTransform(translationX: 30, y: 0)
 
-        summarayLabel.alpha = 0
+        summaryLabel.alpha = 0
         temperatureLabel.alpha = 0
         LowHighTemps.alpha = 0
         dayForecastView.alpha = 0
         
         dayForecastView.contentSize.width = 580
+		weatherAnimationView.contentMode = .scaleAspectFit
     }
 
     @IBAction func onButtonClick(_ sender: Any) {
 
         let searchCity = "Innsbruck"
-        
         weatherManager.downloadWeatherData(for: searchCity) { (result: [Forecast]) in
             DispatchQueue.main.async {
                 if let today = result.first {
                 self.cityLabel.text = searchCity
                 self.temperatureLabel.text = "\(Int(today.temperature.rounded()))°"
-                self.summarayLabel.text = today.summary
+                self.summaryLabel.text = today.summary
 
                 self.tempLowLabel.text = "Lo \(Int(today.tempLow!.rounded()))°"
                 self.tempHighLabel.text = "Hi \(Int(today.tempHigh!.rounded()))°"
@@ -93,7 +107,7 @@ class WeatherViewController: UIViewController {
                 // Set up new weather animation
                 if let weatherCode = result.first?.identifier {
                     switch weatherCode {
-                    case .clearDay, .clearNight, .partlyCloudyDay, .partlyCloudyNight:
+                    case .clearDay, .clearNight:
                         print("Sunny")
                         self.displaySun()
 
@@ -109,13 +123,9 @@ class WeatherViewController: UIViewController {
                         print("Snow")
                         self.displaySnow()
 
-                    case .fog:
-                        print("Fog")
-                       self.displayCloudy()
-
-                    case .cloudy:
+                    case .fog, .cloudy, .partlyCloudyDay, .partlyCloudyNight:
                         print("Cloudy")
-                        self.displaySnow()
+                        self.displayCloudy()
                     }
                 }
 
@@ -138,8 +148,8 @@ class WeatherViewController: UIViewController {
                     }, completion: nil)
 
                     UIView.animate(withDuration: 1, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 0.5, options: [.curveEaseOut], animations: {
-                        self.summarayLabel.alpha = 1
-                        self.summarayLabel.transform = CGAffineTransform(translationX: 0, y: 0)
+                        self.summaryLabel.alpha = 1
+                        self.summaryLabel.transform = CGAffineTransform(translationX: 0, y: 0)
                     }, completion: nil)
 
                     UIView.animate(withDuration: 1, delay: 0.4, usingSpringWithDamping: 1, initialSpringVelocity: 0.5, options: [], animations: {
@@ -151,7 +161,9 @@ class WeatherViewController: UIViewController {
                 }
             }
         }
-    
+
+	// MARK: - Helper methods -
+	
     private func updateDailyForecastWith(data: [Forecast]) {
         let f = DateFormatter()
         for i in 1...5 {
@@ -162,38 +174,44 @@ class WeatherViewController: UIViewController {
             iconForDay[i-1].image = icons[data[i].identifier!.rawValue]
         }
     }
+	
+	@IBAction func didSelectLayerAmount(_ sender: UISegmentedControl) {
+		switch sender.selectedSegmentIndex {
+		case 0:
+			neededLayers = 1
+		case 1:
+			neededLayers = 20
+		case 2:
+			neededLayers = 150
+		default:
+			break
+		}
+		print("Changed needLayers to \(neededLayers)")
+		
+	}
 
     private func clearAnimationView() {
         // Stop UIKit Animations (Sun)
-        self.weatherAnimationView.layer.removeAllAnimations()
-        self.weatherAnimationView.transform = CGAffineTransform(rotationAngle: 0)
-        
+        weatherAnimationView.layer.removeAllAnimations()
+        weatherAnimationView.transform = CGAffineTransform(rotationAngle: 0)
+		
+		// Reset alpha
+		weatherAnimationView.alpha = 1
+		
         // Remove Subviews (Lottie)
         print("removing subView")
-        for view in self.weatherAnimationView.subviews {
+        for view in weatherAnimationView.subviews {
             view.removeFromSuperview()
         }
         
         // Remove Sublayers (Clouds/Snow)
-        self.weatherAnimationView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+        weatherAnimationView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+		
+		layerCount = 0
     }
-    
-    // -- Lottie (Key Frames)
-    private func displayRain() {
-        summarayLabel.textColor = .rain
-        
-        lottieAnimationView = LOTAnimationView(name: "rain")
-		lottieAnimationView?.contentMode = .scaleAspectFit
-        lottieAnimationView?.frame = weatherAnimationView.frame
-        lottieAnimationView?.center = CGPoint(x: weatherAnimationView.frame.size.width / 1.5, y: weatherAnimationView.frame.size.height / 2)
-        self.weatherAnimationView.addSubview(lottieAnimationView!)
-		self.weatherAnimationView.contentMode = .scaleAspectFit
+	
+	// MARK: - Animation Code -
 
-        lottieAnimationView?.loopAnimation = true
-        lottieAnimationView?.animationSpeed = 5
-        lottieAnimationView?.play()
-    }
-    
     // -- Third Party, Dance (Core Animation)
     private func displayCloudy() {
         let imageAnimationView = UIImageView(image: #imageLiteral(resourceName: "CloudyWhiteStroke"))
@@ -238,7 +256,7 @@ class WeatherViewController: UIViewController {
     
     // -- Core Animation
     private func displaySnow() {
-        summarayLabel.textColor = .snow
+        summaryLabel.textColor = .snow
         
         // Generate Cloud
         let cloudEmitter = WeatherEmitter.createEmitter(with: [#imageLiteral(resourceName: "cloud-particle-1"), #imageLiteral(resourceName: "cloud-particle-2")], type: .clouds)
@@ -260,29 +278,49 @@ class WeatherViewController: UIViewController {
         weatherAnimationView.layer.addSublayer(emitter)
     }
     
-    // -- UIKit Animations
+    // -- UIView Animations
     private func displaySun() {
-        summarayLabel.textColor = .sun
+        summaryLabel.textColor = .sun
         
         let imageAnimationView = UIImageView(image: #imageLiteral(resourceName: "Sun"))
         imageAnimationView.frame = weatherAnimationView.frame
-        imageAnimationView.center = CGPoint(x: weatherAnimationView.frame.size.width / 2, y: weatherAnimationView.frame.size.height / 2)
+        imageAnimationView.center = CGPoint(x: weatherAnimationView.frame.size.width / 2,
+											y: weatherAnimationView.frame.size.height / 2)
         weatherAnimationView.addSubview(imageAnimationView)
+		imageAnimationView.contentMode = .scaleAspectFit
+		weatherAnimationView.contentMode = .scaleAspectFit
 		
-        UIView.animate(withDuration: 5,
-                       delay: 0.8,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 0.1,
-                       options: [.repeat, .autoreverse, .curveEaseIn],
+		weatherAnimationView.alpha = 0
+		let rotation = CGAffineTransform(rotationAngle: 130 * (.pi / 180))
+		
+        UIView.animate(withDuration: 10,
+                       delay: 0,
+                       options: [.curveEaseIn],
                        animations: {
-                        self.weatherAnimationView.transform = CGAffineTransform(rotationAngle: 130 * (.pi / 180))
-                       },
-                       completion: nil)
+						self.weatherAnimationView.alpha = 1
+                        self.weatherAnimationView.transform = rotation
+		}) { Void in
+			print("finished transform!")
+		}
+
+		Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
+			print("Timer fired! Alpha looks like it's at 50%")
+			UIView.animate(withDuration: 5,
+						   delay: 0,
+						   options: [.beginFromCurrentState],
+						   animations: {
+							print("alpha: \(self.weatherAnimationView.alpha)")
+							self.weatherAnimationView.alpha = 0
+			}) { Void in
+				print("finished alpha!")
+			}
+		}
+		
     }
 
     // -- Lottie
     private func displayWind() {
-        summarayLabel.textColor = .windy
+        summaryLabel.textColor = .windy
 
         lottieAnimationView = LOTAnimationView(name: "windturbine")
         lottieAnimationView?.frame = weatherAnimationView.frame
@@ -306,7 +344,104 @@ class WeatherViewController: UIViewController {
         leaveEmitter.emitterSize = CGSize(width: 300, height: 900)
         
         weatherAnimationView.layer.addSublayer(leaveEmitter)
-
     }
-}
+	
+	// MARK: - Rain (for comparison) -
+	// -- Lottie (Key Frames)
+	private func displayRain() {
+		for _ in 1...neededLayers {
+			summaryLabel.textColor = .rain
+			layerCount += 1
+			print("Added Lottie Layer. Total count: \(layerCount)")
+			lottieAnimationView = LOTAnimationView(name: "rain")
+			lottieAnimationView?.contentMode = .scaleAspectFit
+			self.weatherAnimationView.addSubview(lottieAnimationView!)
+			weatherAnimationView.addConstraintsWithFormat(format: "H:|[v0]|", views: lottieAnimationView!)
+			weatherAnimationView.addConstraintsWithFormat(format: "V:|[v0]|", views: lottieAnimationView!)
+			
+			self.weatherAnimationView.contentMode = .scaleAspectFit
+			
+			lottieAnimationView?.loopAnimation = true
+			lottieAnimationView?.animationSpeed = 3
+			lottieAnimationView?.play()
+		}
+	}
+	
+	// -- Rain with Core Animation
+	private func displayRainCoreAnimation() {
+            if let rainView = Bundle.main.loadNibNamed("RainCloudView", owner: self,options: nil)?.first as? RainCloud {
+                for _ in 1...neededLayers {
+                layerCount += 1
+                print("Added CA Layer. Total count: \(layerCount)")
 
+                // Add to View
+                weatherAnimationView.addSubview(rainView)
+                
+                // Constrain to center
+                constrain(rainView, weatherAnimationView) {rainView, weatherAnimationView in
+                    rainView.edges == weatherAnimationView.edges
+                }
+                
+                // Important: calculate deltas before transforming!
+                let deltaX = rainView.dropletsBottom.center.x - rainView.dropletsCenter.center.x
+                let deltaY =  rainView.dropletsBottom.center.y - rainView.dropletsCenter.center.y
+                rainView.dropletsCenter.alpha = 0
+                
+                // CABasicAnimation uses a single key frame and interpolates equally from
+                // the `fromValue` to the `toValue` over the `duration`
+                let translation = CABasicAnimation(keyPath: "position")
+                translation.duration = 5
+                translation.fromValue = NSValue(cgPoint: rainView.dropletsTop.center)
+                translation.toValue = NSValue(cgPoint: rainView.dropletsCenter.center)
+                
+                // CAKeyFrameAnimation allows to define custom keyframe intervals and values
+                // The 'keyTime` is an array which contains the progress of the animation time! (0-1)
+                // The 'values` is an array with the values of the animation,
+                // they are assigned to the `keytimes` indices 1:1
+                let opacity = CAKeyframeAnimation(keyPath: "opacity")
+                opacity.duration = 10
+                opacity.values = 	[0, 0.5, 1]
+                opacity.keyTimes = 	[0, 1, 2]
+                
+                rainView.dropletsTop.layer.add(opacity, forKey: "opacity")
+                rainView.dropletsTop.layer.add(translation, forKey: "position")
+            }
+		}
+	}
+	
+	// -- Rain with UIView.animate()
+	private func displayRainUiView() {
+        for _ in 1...neededLayers {
+		if let rainView = Bundle.main.loadNibNamed("RainCloudView", owner: self, options: nil)?.first as? RainCloud {
+                weatherAnimationView.addSubview(rainView)
+                layerCount += 1
+                print("Added UIView Layer. Total count: \(layerCount)")
+
+                
+                // Constrain to center
+                constrain(rainView, weatherAnimationView) {rainView, weatherAnimationView in
+                    rainView.edges == weatherAnimationView.edges
+                }
+                
+                UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [.repeat, .autoreverse], animations: ({
+                    rainView.cloud.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+                }))
+                
+                UIView.animate(withDuration: 0.6, delay: 0, options: [.curveLinear ,.repeat], animations: ({
+                    // Important: calculate deltas before transforming!
+                    let deltaX = rainView.dropletsBottom.center.x - rainView.dropletsCenter.center.x
+                    let deltaY =  rainView.dropletsBottom.center.y - rainView.dropletsCenter.center.y
+                    
+                    rainView.dropletsTop.center = rainView.dropletsCenter.center
+                    rainView.dropletsTop.alpha = 1
+                    
+                    rainView.dropletsCenter.center = rainView.dropletsBottom.center
+                    rainView.dropletsCenter.alpha = 0.5
+                    
+                    rainView.dropletsBottom.transform = CGAffineTransform(translationX: deltaX, y: deltaY)
+                    rainView.dropletsBottom.alpha = 0
+                }))
+            }
+		}
+	}
+}

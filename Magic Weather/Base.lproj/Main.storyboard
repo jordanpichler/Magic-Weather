@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -37,7 +36,7 @@
                                 </constraints>
                             </view>
                             <view alpha="0.75" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="xXc-XO-PPr">
-                                <rect key="frame" x="0.0" y="130.33333333333337" width="414" height="270"/>
+                                <rect key="frame" x="0.0" y="151" width="414" height="270"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="270" id="vqC-0h-xsY"/>
                                 </constraints>
@@ -286,16 +285,29 @@
                                     <action selector="onButtonClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cnl-G5-yC3"/>
                                 </connections>
                             </button>
+                            <segmentedControl hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="roZ-ni-1Y7">
+                                <rect key="frame" x="151" y="106" width="113" height="29"/>
+                                <segments>
+                                    <segment title="1"/>
+                                    <segment title="20"/>
+                                    <segment title="150"/>
+                                </segments>
+                                <connections>
+                                    <action selector="didSelectLayerAmount:" destination="BYZ-38-t0r" eventType="valueChanged" id="Vne-jH-DlA"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="eJH-OS-UT4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0cD-iF-oIw"/>
                             <constraint firstItem="oho-Ca-z0E" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="8kO-j3-iLo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xFX-88-FfB" secondAttribute="trailing" id="CTn-YR-2c9"/>
-                            <constraint firstItem="xXc-XO-PPr" firstAttribute="top" secondItem="eJH-OS-UT4" secondAttribute="bottom" constant="70" id="KTc-5f-ycv"/>
+                            <constraint firstItem="xXc-XO-PPr" firstAttribute="top" secondItem="eJH-OS-UT4" secondAttribute="bottom" constant="90" id="KTc-5f-ycv"/>
+                            <constraint firstItem="roZ-ni-1Y7" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="86" id="LJS-Xp-xjY"/>
                             <constraint firstItem="eJH-OS-UT4" firstAttribute="top" secondItem="xFX-88-FfB" secondAttribute="bottom" constant="10" id="MPf-ni-unl"/>
                             <constraint firstItem="xXc-XO-PPr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="N3X-a1-9rf"/>
                             <constraint firstItem="xXc-XO-PPr" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="SfZ-BX-qAo"/>
+                            <constraint firstItem="roZ-ni-1Y7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TaZ-Tb-OLg"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="oho-Ca-z0E" secondAttribute="bottom" constant="25" id="WFo-eB-wkg"/>
                             <constraint firstItem="xFX-88-FfB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="30" id="dwT-0e-SC4"/>
                             <constraint firstAttribute="trailingMargin" secondItem="oho-Ca-z0E" secondAttribute="trailing" id="gL1-sA-wuc"/>
@@ -308,7 +320,7 @@
                         <outlet property="LowHighTemps" destination="bCV-DK-yic" id="vph-lh-ooI"/>
                         <outlet property="cityLabel" destination="xFX-88-FfB" id="7Na-Yp-JnQ"/>
                         <outlet property="dayForecastView" destination="Rms-W0-Vmh" id="pJg-zR-e3b"/>
-                        <outlet property="summarayLabel" destination="NWa-SP-wfp" id="qDv-pV-JiU"/>
+                        <outlet property="summaryLabel" destination="NWa-SP-wfp" id="qDv-pV-JiU"/>
                         <outlet property="tempHighLabel" destination="oKg-ZD-OEf" id="JHF-eu-eYG"/>
                         <outlet property="tempLowLabel" destination="TnT-80-FxV" id="SrU-yU-k8E"/>
                         <outlet property="temperatureLabel" destination="yN6-5F-3Bn" id="bnx-QA-wgq"/>
