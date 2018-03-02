@@ -14,10 +14,24 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "17487A0D1ECA3CDB004496BF"
-               BuildableName = "Magic Weather.app"
-               BlueprintName = "Magic Weather"
+               BlueprintIdentifier = "17B191031F9A5A1E00BD100E"
+               BuildableName = "Magic Weather Stage.app"
+               BlueprintName = "Magic Weather Stage"
                ReferencedContainer = "container:Magic Weather.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "05B5E6B6BF53C2C31E616E4C5644E8BB"
+               BuildableName = "Cartography.framework"
+               BlueprintName = "Cartography"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +47,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "17487A0D1ECA3CDB004496BF"
-            BuildableName = "Magic Weather.app"
-            BlueprintName = "Magic Weather"
+            BlueprintIdentifier = "17B191031F9A5A1E00BD100E"
+            BuildableName = "Magic Weather Stage.app"
+            BlueprintName = "Magic Weather Stage"
             ReferencedContainer = "container:Magic Weather.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -57,9 +71,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "17487A0D1ECA3CDB004496BF"
-            BuildableName = "Magic Weather.app"
-            BlueprintName = "Magic Weather"
+            BlueprintIdentifier = "17B191031F9A5A1E00BD100E"
+            BuildableName = "Magic Weather Stage.app"
+            BlueprintName = "Magic Weather Stage"
             ReferencedContainer = "container:Magic Weather.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -76,9 +90,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "17487A0D1ECA3CDB004496BF"
-            BuildableName = "Magic Weather.app"
-            BlueprintName = "Magic Weather"
+            BlueprintIdentifier = "17B191031F9A5A1E00BD100E"
+            BuildableName = "Magic Weather Stage.app"
+            BlueprintName = "Magic Weather Stage"
             ReferencedContainer = "container:Magic Weather.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
