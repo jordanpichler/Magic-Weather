@@ -358,41 +358,74 @@ class WeatherViewController: UIViewController {
 	private func displayRainCoreAnimation() {
             if let rainView = Bundle.main.loadNibNamed("RainCloudView", owner: self,options: nil)?.first as? RainCloud {
                 for _ in 1...neededLayers {
-                layerCount += 1
-                print("Added CA Layer. Total count: \(layerCount)")
+					layerCount += 1
+					print("Added CA Layer. Total count: \(layerCount)")
 
-                // Add to View
-                weatherAnimationView.addSubview(rainView)
-                
-                // Constrain to center
-                constrain(rainView, weatherAnimationView) {rainView, weatherAnimationView in
-                    rainView.edges == weatherAnimationView.edges
-                }
-                
-                // Important: calculate deltas before transforming!
-                let deltaX = rainView.dropletsBottom.center.x - rainView.dropletsCenter.center.x
-                let deltaY =  rainView.dropletsBottom.center.y - rainView.dropletsCenter.center.y
-                rainView.dropletsCenter.alpha = 0
-                
-                // CABasicAnimation uses a single key frame and interpolates equally from
-                // the `fromValue` to the `toValue` over the `duration`
-                let translation = CABasicAnimation(keyPath: "position")
-                translation.duration = 5
-                translation.fromValue = NSValue(cgPoint: rainView.dropletsTop.center)
-                translation.toValue = NSValue(cgPoint: rainView.dropletsCenter.center)
-                
-                // CAKeyFrameAnimation allows to define custom keyframe intervals and values
-                // The 'keyTime` is an array which contains the progress of the animation time! (0-1)
-                // The 'values` is an array with the values of the animation,
-                // they are assigned to the `keytimes` indices 1:1
-                let opacity = CAKeyframeAnimation(keyPath: "opacity")
-                opacity.duration = 10
-                opacity.values = 	[0, 0.5, 1]
-                opacity.keyTimes = 	[0, 1, 2]
-                
-                rainView.dropletsTop.layer.add(opacity, forKey: "opacity")
-                rainView.dropletsTop.layer.add(translation, forKey: "position")
-            }
+					// Add to View
+					weatherAnimationView.addSubview(rainView)
+					
+					// Constrain to center
+					constrain(rainView, weatherAnimationView) {rainView, weatherAnimationView in
+						rainView.edges == weatherAnimationView.edges
+					}
+					
+					// Important: calculate deltas before transforming!
+					let deltaX = rainView.dropletsBottom.center.x - rainView.dropletsCenter.center.x
+					let deltaY =  rainView.dropletsBottom.center.y - rainView.dropletsCenter.center.y
+					
+					// CABasicAnimation uses a single key frame and interpolates equally from
+					// the `fromValue` to the `toValue` over the `duration`
+					// alternatively, the `byValue` field can be defined to modify the existing properties
+					let translation = CABasicAnimation(keyPath: "position")
+					translation.duration = 0.5
+					translation.byValue = [deltaX, deltaY]
+
+					let fadeIn = CABasicAnimation(keyPath: "opacity")
+					fadeIn.duration = 0.5
+					fadeIn.fromValue = 0
+					fadeIn.toValue = 1
+
+					// CAKeyFrameAnimation allows to define custom keyframe intervals and values
+					// The 'keyTime` is an array which contains the progress of the animation time! (0-1)
+					// The 'values` is an array with the values of the animation,
+					// they are assigned to the `keytimes` indices 1:1
+					let fadeOut50 = CAKeyframeAnimation(keyPath: "opacity")
+					fadeOut50.duration = 0.5
+					fadeOut50.values = 	 [1, 0.5]
+					fadeOut50.keyTimes = [0, 1]
+					
+					let fadeOut100 = CAKeyframeAnimation(keyPath: "opacity")
+					fadeOut100.duration = 0.5
+					fadeOut100.values = 	[0.5, 0]
+					fadeOut100.keyTimes = 	[0, 1]
+
+					// Group animations for each droplet layer
+					let moveDownAndFadeIn = CAAnimationGroup()
+					moveDownAndFadeIn.animations = [translation, fadeIn]
+					moveDownAndFadeIn.duration = 0.5
+					moveDownAndFadeIn.isRemovedOnCompletion = false
+					moveDownAndFadeIn.repeatCount = Float.infinity // and beyond!
+					
+					let moveDownAndFadeOut = CAAnimationGroup()
+					moveDownAndFadeOut.animations = [translation, fadeOut100]
+					moveDownAndFadeOut.duration = 0.5
+					moveDownAndFadeOut.isRemovedOnCompletion = false
+					moveDownAndFadeOut.repeatCount = Float.infinity
+					
+					// Add group of animations to layer. Key is not required here
+					rainView.dropletsTop.layer.add(moveDownAndFadeIn, forKey: nil)
+					rainView.dropletsBottom.layer.add(moveDownAndFadeOut, forKey: nil)
+					
+					// Also possible to add individual animations to view's layers
+					// Remember to set `isRemovedOnCompletion` to false and repeat count!
+					fadeOut50.isRemovedOnCompletion = false
+					fadeOut50.repeatCount = Float.infinity
+					translation.isRemovedOnCompletion = false
+					translation.repeatCount = Float.infinity
+					
+					rainView.dropletsCenter.layer.add(fadeOut50, forKey: "opacity")
+					rainView.dropletsCenter.layer.add(translation, forKey: "position")
+				}
 		}
 	}
 	
