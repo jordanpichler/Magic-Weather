@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 enum celltype {
     case snowflakes, clouds, windlines, leaves
 }

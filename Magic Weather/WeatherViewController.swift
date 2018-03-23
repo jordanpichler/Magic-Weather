@@ -90,7 +90,9 @@ class WeatherViewController: UIViewController {
                 }
                 // Clear Animation View of prior weather animations
                 self.clearAnimationView()
-                
+				self.weatherAnimationView.alpha = 0
+				
+				
                 // Set up new weather animation
                 if let weatherCode = result.first?.identifier {
                     switch weatherCode {
@@ -124,7 +126,7 @@ class WeatherViewController: UIViewController {
                     }, completion: nil)
 
                     // Slide & Fade in Labels and Forecast
-                    UIView.animate(withDuration: 3, delay: 0.1, usingSpringWithDamping: 0.1, initialSpringVelocity: 0.5, options: [.curveEaseOut], animations: {
+                    UIView.animate(withDuration: 3, delay: 0.1, usingSpringWithDamping: 0.1, initialSpringVelocity: -10, animations: {
                         self.temperatureLabel.alpha = 1
                         self.temperatureLabel.transform = CGAffineTransform(translationX: 0, y: 0)
                     }, completion: nil)
@@ -202,18 +204,19 @@ class WeatherViewController: UIViewController {
     // -- Third Party, Dance (Core Animation)
     private func displayCloudy() {
         let imageAnimationView = UIImageView(image: #imageLiteral(resourceName: "CloudyWhiteStroke"))
-        imageAnimationView.frame.size = CGSize(width: weatherAnimationView.frame.width, height: 500)
-        imageAnimationView.center = CGPoint(x: (view.frame.width / 2 - 20), y: 140)
         imageAnimationView.contentMode = .scaleAspectFit
 
         let imageAnimationView2 = UIImageView(image: #imageLiteral(resourceName: "CloudyGrey"))
-        imageAnimationView2.frame.size = CGSize(width: weatherAnimationView.frame.width, height: 500)
-        imageAnimationView2.center = CGPoint(x: (view.frame.width / 2 - 110), y: 90)
         imageAnimationView2.contentMode = .scaleAspectFit
 
         weatherAnimationView.addSubview(imageAnimationView2)
         weatherAnimationView.addSubview(imageAnimationView)
-        
+		
+		weatherAnimationView.addConstraintsWithFormat(format: "H:[v0]|", views: imageAnimationView)
+        weatherAnimationView.addConstraintsWithFormat(format: "H:|-[v0]", views: imageAnimationView2)
+		weatherAnimationView.addConstraintsWithFormat(format: "V:[v0]-|", views: imageAnimationView)
+		weatherAnimationView.addConstraintsWithFormat(format: "V:|-[v0]", views: imageAnimationView2)
+		
         imageAnimationView.dance.animate(duration: 2, curve: .easeInOut) {
             $0.transform = CGAffineTransform(translationX: -110, y: 0)
             }.addCompletion { _ in
@@ -270,38 +273,37 @@ class WeatherViewController: UIViewController {
         summaryLabel.textColor = .sun
         
         let imageAnimationView = UIImageView(image: #imageLiteral(resourceName: "Sun"))
-        imageAnimationView.frame = weatherAnimationView.frame
-        imageAnimationView.center = CGPoint(x: weatherAnimationView.frame.size.width / 2,
-											y: weatherAnimationView.frame.size.height / 2)
         weatherAnimationView.addSubview(imageAnimationView)
 		imageAnimationView.contentMode = .scaleAspectFit
 		weatherAnimationView.contentMode = .scaleAspectFit
+		weatherAnimationView.addConstraintsWithFormat(format: "H:|[v0]|", views: imageAnimationView)
+		weatherAnimationView.addConstraintsWithFormat(format: "V:|[v0]|", views: imageAnimationView)
 		
-		weatherAnimationView.alpha = 0
+//		weatherAnimationView.alpha = 0
 		let rotation = CGAffineTransform(rotationAngle: 130 * (.pi / 180))
 		
-        UIView.animate(withDuration: 10,
+        UIView.animate(withDuration: 2,
                        delay: 0,
-                       options: [.curveEaseIn],
+                       options: [.curveEaseIn, .autoreverse, .repeat],
                        animations: {
-						self.weatherAnimationView.alpha = 1
+//						self.weatherAnimationView.alpha = 1
                         self.weatherAnimationView.transform = rotation
 		}) { Void in
 			print("finished transform!")
 		}
-
-		Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
-			print("Timer fired! Alpha looks like it's at 50%")
-			UIView.animate(withDuration: 5,
-						   delay: 0,
-						   options: [.beginFromCurrentState],
-						   animations: {
-							print("alpha: \(self.weatherAnimationView.alpha)")
-							self.weatherAnimationView.alpha = 0
-			}) { Void in
-				print("finished alpha!")
-			}
-		}
+//
+//		Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
+//			print("Timer fired! Alpha looks like it's at 50%")
+//			UIView.animate(withDuration: 5,
+//						   delay: 0,
+//						   options: [.beginFromCurrentState],
+//						   animations: {
+//							print("alpha: \(self.weatherAnimationView.alpha)")
+//							self.weatherAnimationView.alpha = 0
+//			}) { Void in
+//				print("finished alpha!")
+//			}
+//		}
 		
     }
 
@@ -340,92 +342,116 @@ class WeatherViewController: UIViewController {
 			summaryLabel.textColor = .rain
 			layerCount += 1
 			print("Added Lottie Layer. Total count: \(layerCount)")
+			
 			lottieAnimationView = LOTAnimationView(name: "rain")
+			lottieAnimationView?.loopAnimation = true
+			lottieAnimationView?.animationSpeed = 3
+			lottieAnimationView?.play()
+			
+			// Set constraints and appearance
 			lottieAnimationView?.contentMode = .scaleAspectFit
 			self.weatherAnimationView.addSubview(lottieAnimationView!)
 			weatherAnimationView.addConstraintsWithFormat(format: "H:|[v0]|", views: lottieAnimationView!)
 			weatherAnimationView.addConstraintsWithFormat(format: "V:|[v0]|", views: lottieAnimationView!)
-			
 			self.weatherAnimationView.contentMode = .scaleAspectFit
-			
-			lottieAnimationView?.loopAnimation = true
-			lottieAnimationView?.animationSpeed = 3
-			lottieAnimationView?.play()
 		}
 	}
 	
 	// -- Rain with Core Animation
 	private func displayRainCoreAnimation() {
+		for _ in 1...neededLayers {
             if let rainView = Bundle.main.loadNibNamed("RainCloudView", owner: self,options: nil)?.first as? RainCloud {
-                for _ in 1...neededLayers {
-					layerCount += 1
-					print("Added CA Layer. Total count: \(layerCount)")
+				layerCount += 1
+				print("Added CA Layer. Total count: \(layerCount)")
 
-					// Add to View
-					weatherAnimationView.addSubview(rainView)
-					
-					// Constrain to center
-					constrain(rainView, weatherAnimationView) {rainView, weatherAnimationView in
-						rainView.edges == weatherAnimationView.edges
-					}
-					
-					// Important: calculate deltas before transforming!
-					let deltaX = rainView.dropletsBottom.center.x - rainView.dropletsCenter.center.x
-					let deltaY =  rainView.dropletsBottom.center.y - rainView.dropletsCenter.center.y
-					
-					// CABasicAnimation uses a single key frame and interpolates equally from
-					// the `fromValue` to the `toValue` over the `duration`
-					// alternatively, the `byValue` field can be defined to modify the existing properties
-					let translation = CABasicAnimation(keyPath: "position")
-					translation.duration = 0.5
-					translation.byValue = [deltaX, deltaY]
-
-					let fadeIn = CABasicAnimation(keyPath: "opacity")
-					fadeIn.duration = 0.5
-					fadeIn.fromValue = 0
-					fadeIn.toValue = 1
-
-					// CAKeyFrameAnimation allows to define custom keyframe intervals and values
-					// The 'keyTime` is an array which contains the progress of the animation time! (0-1)
-					// The 'values` is an array with the values of the animation,
-					// they are assigned to the `keytimes` indices 1:1
-					let fadeOut50 = CAKeyframeAnimation(keyPath: "opacity")
-					fadeOut50.duration = 0.5
-					fadeOut50.values = 	 [1, 0.5]
-					fadeOut50.keyTimes = [0, 1]
-					
-					let fadeOut100 = CAKeyframeAnimation(keyPath: "opacity")
-					fadeOut100.duration = 0.5
-					fadeOut100.values = 	[0.5, 0]
-					fadeOut100.keyTimes = 	[0, 1]
-
-					// Group animations for each droplet layer
-					let moveDownAndFadeIn = CAAnimationGroup()
-					moveDownAndFadeIn.animations = [translation, fadeIn]
-					moveDownAndFadeIn.duration = 0.5
-					moveDownAndFadeIn.isRemovedOnCompletion = false
-					moveDownAndFadeIn.repeatCount = Float.infinity // and beyond!
-					
-					let moveDownAndFadeOut = CAAnimationGroup()
-					moveDownAndFadeOut.animations = [translation, fadeOut100]
-					moveDownAndFadeOut.duration = 0.5
-					moveDownAndFadeOut.isRemovedOnCompletion = false
-					moveDownAndFadeOut.repeatCount = Float.infinity
-					
-					// Add group of animations to layer. Key is not required here
-					rainView.dropletsTop.layer.add(moveDownAndFadeIn, forKey: nil)
-					rainView.dropletsBottom.layer.add(moveDownAndFadeOut, forKey: nil)
-					
-					// Also possible to add individual animations to view's layers
-					// Remember to set `isRemovedOnCompletion` to false and repeat count!
-					fadeOut50.isRemovedOnCompletion = false
-					fadeOut50.repeatCount = Float.infinity
-					translation.isRemovedOnCompletion = false
-					translation.repeatCount = Float.infinity
-					
-					rainView.dropletsCenter.layer.add(fadeOut50, forKey: "opacity")
-					rainView.dropletsCenter.layer.add(translation, forKey: "position")
+				// Add to View
+				weatherAnimationView.addSubview(rainView)
+				
+				// Constrain to center
+				constrain(rainView, weatherAnimationView) {rainView, weatherAnimationView in
+					rainView.edges == weatherAnimationView.edges
 				}
+				
+				// Important: calculate deltas before transforming!
+				let deltaX = rainView.dropletsBottom.center.x - rainView.dropletsCenter.center.x
+				let deltaY =  rainView.dropletsBottom.center.y - rainView.dropletsCenter.center.y
+				
+				// CABasicAnimation uses a single key frame and interpolates equally from
+				// the `fromValue` to the `toValue` over the `duration`
+				// alternatively, the `byValue` field can be defined to modify the existing properties
+				let translation = CABasicAnimation(keyPath: #keyPath(CALayer.position))
+				translation.duration = 0.5
+				translation.byValue = [deltaX, deltaY]
+
+//				// ----
+//
+//				let mirror = CABasicAnimation(keyPath: #keyPath(CALayer.transform))
+//				let matrix = CATransform3DMakeScale(1, -1, 1)
+//				mirror.duration = 2
+//				mirror.toValue = NSValue(caTransform3D: matrix)
+//
+//				// ----
+				
+				let fadeIn = CABasicAnimation(keyPath: "opacity")
+				fadeIn.duration = 0.5
+				fadeIn.fromValue = 0
+				fadeIn.toValue = 1
+
+				// Cloud pulsating
+				let pulsate = CABasicAnimation(keyPath: "transform.scale")
+				pulsate.duration = 0.5
+				pulsate.byValue = 0.1 // Scale up 10%
+				pulsate.autoreverses = true
+				
+				// CAKeyFrameAnimation allows to define custom keyframe intervals and values
+				// The 'keyTime` is an array which contains the progress of the animation time! (0-1)
+				// The 'values` is an array with the values of the animation,
+				// they are assigned to the `keytimes` indices 1:1
+				let fadeOut50 = CAKeyframeAnimation(keyPath: "opacity")
+				fadeOut50.duration = 0.5
+				fadeOut50.values = 	 [1, 0.5]
+				fadeOut50.keyTimes = [0, 1]
+				
+				let fadeOut100 = CAKeyframeAnimation(keyPath: "opacity")
+				fadeOut100.duration = 0.5
+				fadeOut100.values = 	[0.5, 0]
+				fadeOut100.keyTimes = 	[0, 1]
+
+				let fadeOut = CABasicAnimation(keyPath: "opacity")
+				fadeOut.duration = 0.5
+				fadeOut.byValue = -0.5
+				
+				// Group animations for each droplet layer
+				let moveDownAndFadeIn = CAAnimationGroup()
+				moveDownAndFadeIn.animations = [translation, fadeIn]
+				moveDownAndFadeIn.duration = 0.5
+				moveDownAndFadeIn.isRemovedOnCompletion = false
+				moveDownAndFadeIn.repeatCount = Float.infinity // and beyond!
+				
+				let moveDownAndFadeOut = CAAnimationGroup()
+				moveDownAndFadeOut.animations = [translation, fadeOut]
+				moveDownAndFadeOut.duration = 0.5
+				moveDownAndFadeOut.isRemovedOnCompletion = false
+				moveDownAndFadeOut.repeatCount = Float.infinity
+				
+				// Add group of animations to layer. Key is not required here
+				rainView.dropletsTop.layer.add(moveDownAndFadeIn, forKey: nil)
+				rainView.dropletsCenter.layer.add(moveDownAndFadeOut, forKey: nil)
+				rainView.dropletsBottom.layer.add(moveDownAndFadeOut, forKey: nil)
+
+				// Also possible to add individual animations to view's layers
+				// Remember to set `isRemovedOnCompletion` to false and repeat count!
+				fadeOut50.isRemovedOnCompletion = false
+				fadeOut50.repeatCount = Float.infinity
+				translation.isRemovedOnCompletion = false
+				translation.repeatCount = Float.infinity
+//				mirror.isRemovedOnCompletion = false
+//				mirror.repeatCount = Float.infinity
+				
+				rainView.cloud.layer.add(pulsate, forKey: "transform")
+//				rainView.dropletsCenter.layer.add(fadeOut50, forKey: "opacity")
+//				rainView.dropletsCenter.layer.add(translation, forKey: "position")
+			}
 		}
 	}
 	
@@ -436,7 +462,6 @@ class WeatherViewController: UIViewController {
                 weatherAnimationView.addSubview(rainView)
                 layerCount += 1
                 print("Added UIView Layer. Total count: \(layerCount)")
-
                 
                 // Constrain to center
                 constrain(rainView, weatherAnimationView) {rainView, weatherAnimationView in
