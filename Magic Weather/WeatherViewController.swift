@@ -92,7 +92,6 @@ class WeatherViewController: UIViewController {
                 self.clearAnimationView()
 				self.weatherAnimationView.alpha = 0
 				
-				
                 // Set up new weather animation
                 if let weatherCode = result.first?.identifier {
                     switch weatherCode {
@@ -282,9 +281,11 @@ class WeatherViewController: UIViewController {
 //		weatherAnimationView.alpha = 0
 		let rotation = CGAffineTransform(rotationAngle: 130 * (.pi / 180))
 		
-        UIView.animate(withDuration: 2,
+        UIView.animate(withDuration: 5,
                        delay: 0,
-                       options: [.curveEaseIn, .autoreverse, .repeat],
+					   usingSpringWithDamping: 0.5,
+					   initialSpringVelocity: 1,
+                       options: [.autoreverse, .repeat],
                        animations: {
 //						self.weatherAnimationView.alpha = 1
                         self.weatherAnimationView.transform = rotation
@@ -445,12 +446,10 @@ class WeatherViewController: UIViewController {
 				fadeOut50.repeatCount = Float.infinity
 				translation.isRemovedOnCompletion = false
 				translation.repeatCount = Float.infinity
-//				mirror.isRemovedOnCompletion = false
-//				mirror.repeatCount = Float.infinity
+				pulsate.isRemovedOnCompletion = false
+				pulsate.repeatCount = Float.infinity
 				
 				rainView.cloud.layer.add(pulsate, forKey: "transform")
-//				rainView.dropletsCenter.layer.add(fadeOut50, forKey: "opacity")
-//				rainView.dropletsCenter.layer.add(translation, forKey: "position")
 			}
 		}
 	}
