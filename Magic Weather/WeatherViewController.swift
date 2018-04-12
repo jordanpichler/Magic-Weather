@@ -39,8 +39,6 @@ class WeatherViewController: UIViewController {
     @IBOutlet var labelForDay: [UILabel]!
 
     @IBOutlet var iconForDay: [UIImageView]!
-    
-    var lottieAnimationView: LOTAnimationView?
 	
 	private var layerCount = 0
     private var neededLayers = 1
@@ -94,58 +92,56 @@ class WeatherViewController: UIViewController {
 				
                 // Set up new weather animation
                 if let weatherCode = result.first?.identifier {
-                    switch weatherCode {
-                    case .clearDay, .clearNight:
-                        print("Sunny")
-                        self.displaySun()
+					switch weatherCode {
+					case .clearDay, .clearNight:
+						print("Sunny")
+						self.displaySun()
 
-                    case .rain, .sleet:
-                        print("Rain")
-                        self.displayRain()
+					case .rain, .sleet:
+						print("Rain")
+						self.displayRain()
 
-                    case .wind:
-                        print("Wind")
-                        self.displayWind()
+					case .wind:
+						print("Wind")
+						self.displayWind()
 
-                    case .snow:
-                        print("Snow")
-                        self.displaySnow()
+					case .snow:
+						print("Snow")
+						self.displaySnow()
 
-                    case .fog, .cloudy, .partlyCloudyDay, .partlyCloudyNight:
-                        print("Cloudy")
-                        self.displayCloudy()
-                    }
+					case .fog, .cloudy, .partlyCloudyDay, .partlyCloudyNight:
+						print("Cloudy")
+						self.displayCloudy()
+					}
                 }
 
-                    self.updateDailyForecastWith(data: result)
+				self.updateDailyForecastWith(data: result)
                     
-                    // Fade in Weather Animation
-                    UIView.animate(withDuration: 3, animations: {
-                        self.weatherAnimationView.alpha = 1
-                    }, completion: nil)
+				// Fade in Weather Animation
+				UIView.animate(withDuration: 2, animations: {
+					self.weatherAnimationView.alpha = 1
+					}, completion: nil)
 
-                    // Slide & Fade in Labels and Forecast
-                    UIView.animate(withDuration: 3, delay: 0.1, usingSpringWithDamping: 0.1, initialSpringVelocity: -10, animations: {
-                        self.temperatureLabel.alpha = 1
-                        self.temperatureLabel.transform = CGAffineTransform(translationX: 0, y: 0)
-                    }, completion: nil)
+				// Slide & Fade in Labels and Forecast
+				UIView.animate(withDuration: 3, delay: 0.1, usingSpringWithDamping: 0.1, initialSpringVelocity: -10, animations: {
+					self.temperatureLabel.alpha = 1
+					self.temperatureLabel.transform = CGAffineTransform(translationX: 0, y: 0)
+					}, completion: nil)
 
-                    UIView.animate(withDuration: 1, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0.5, options: [.curveLinear], animations: {
-                        self.LowHighTemps.alpha = 1
-                        self.LowHighTemps.transform = CGAffineTransform(translationX: 0, y: 0)
-                    }, completion: nil)
+				UIView.animate(withDuration: 1, delay: 0.2, usingSpringWithDamping: 1, initialSpringVelocity: 0.5, options: [], animations: {
+					self.LowHighTemps.alpha = 1
+					self.LowHighTemps.transform = CGAffineTransform(translationX: 0, y: 0)
+					}, completion: nil)
 
-                    UIView.animate(withDuration: 1, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 0.5, options: [.curveEaseOut], animations: {
-                        self.summaryLabel.alpha = 1
-                        self.summaryLabel.transform = CGAffineTransform(translationX: 0, y: 0)
-                    }, completion: nil)
+				UIView.animate(withDuration: 1, delay: 0.3, usingSpringWithDamping: 1, initialSpringVelocity: 0.5, options: [], animations: {
+					self.summaryLabel.alpha = 1
+					self.summaryLabel.transform = CGAffineTransform(translationX: 0, y: 0)
+					}, completion: nil)
 
-                    UIView.animate(withDuration: 1, delay: 0.4, usingSpringWithDamping: 1, initialSpringVelocity: 0.5, options: [], animations: {
-                        self.dayForecastView.alpha = 1
-                        self.dayForecastView.transform = CGAffineTransform(translationX: 0, y: 0)
-                    }, completion: nil)
-
-                    print("Labels set!")
+				UIView.animate(withDuration: 1, delay: 0.4, usingSpringWithDamping: 1, initialSpringVelocity: 0.5, options: [], animations: {
+					self.dayForecastView.alpha = 1
+					self.dayForecastView.transform = CGAffineTransform(translationX: 0, y: 0)
+					}, completion: nil)
                 }
             }
         }
@@ -202,166 +198,173 @@ class WeatherViewController: UIViewController {
 
     // -- Third Party, Dance (Core Animation)
     private func displayCloudy() {
-        let imageAnimationView = UIImageView(image: #imageLiteral(resourceName: "CloudyWhiteStroke"))
-        imageAnimationView.contentMode = .scaleAspectFit
+		for _ in 1...self.neededLayers {
+			let imageAnimationView = UIImageView(image: #imageLiteral(resourceName: "CloudyWhiteStroke"))
+			imageAnimationView.contentMode = .scaleAspectFit
 
-        let imageAnimationView2 = UIImageView(image: #imageLiteral(resourceName: "CloudyGrey"))
-        imageAnimationView2.contentMode = .scaleAspectFit
+			let imageAnimationView2 = UIImageView(image: #imageLiteral(resourceName: "CloudyGrey"))
+			imageAnimationView2.contentMode = .scaleAspectFit
 
-        weatherAnimationView.addSubview(imageAnimationView2)
-        weatherAnimationView.addSubview(imageAnimationView)
-		
-		weatherAnimationView.addConstraintsWithFormat(format: "H:[v0]|", views: imageAnimationView)
-        weatherAnimationView.addConstraintsWithFormat(format: "H:|-[v0]", views: imageAnimationView2)
-		weatherAnimationView.addConstraintsWithFormat(format: "V:[v0]-|", views: imageAnimationView)
-		weatherAnimationView.addConstraintsWithFormat(format: "V:|-[v0]", views: imageAnimationView2)
-		
-        imageAnimationView.dance.animate(duration: 2, curve: .easeInOut) {
-            $0.transform = CGAffineTransform(translationX: -110, y: 0)
-            }.addCompletion { _ in
-                print("cloud white moved")
-            }.start(after: 0.5)
+			weatherAnimationView.addSubview(imageAnimationView2)
+			weatherAnimationView.addSubview(imageAnimationView)
+			
+			weatherAnimationView.addConstraintsWithFormat(format: "H:[v0]|", views: imageAnimationView)
+			weatherAnimationView.addConstraintsWithFormat(format: "H:|-[v0]", views: imageAnimationView2)
+			weatherAnimationView.addConstraintsWithFormat(format: "V:[v0]-|", views: imageAnimationView)
+			weatherAnimationView.addConstraintsWithFormat(format: "V:|-[v0]", views: imageAnimationView2)
+			
+			imageAnimationView.dance.animate(duration: 2, curve: .easeInOut) {
+				$0.transform = CGAffineTransform(translationX: -110, y: 0)
+				}.addCompletion { _ in
+					print("cloud white moved")
+				}.start(after: 0.5)
 
-        imageAnimationView2.dance.animate(duration: 2, curve: .easeInOut) {
-            $0.transform = CGAffineTransform(translationX: 90, y: 0)
-            }.addCompletion { _ in
-                print("cloud gray moved")
-            }.start(after: 0.5)
+			imageAnimationView2.dance.animate(duration: 2, curve: .easeInOut) {
+				$0.transform = CGAffineTransform(translationX: 90, y: 0)
+				}.addCompletion { _ in
+					print("cloud gray moved")
+				}.start(after: 0.5)
 
-        // (!) This Library doesn't have a loop option!?
-        
-        imageAnimationView.dance.animate(duration: 2, curve: .easeInOut) {
-            $0.transform = CGAffineTransform(translationX: 0, y: 0)
-            }.addCompletion { _ in
-                print("cloud white moved back")
-            }.start(after: 2.7)
-        
-        imageAnimationView2.dance.animate(duration: 2, curve: .easeInOut) {
-            $0.transform = CGAffineTransform(translationX: 0, y: 0)
-            }.addCompletion { _ in
-                print("cloud gray moved back")
-            }.start(after: 2.7)
+			// (!) This Library doesn't have a loop option!?
+			
+			imageAnimationView.dance.animate(duration: 2, curve: .easeInOut) {
+				$0.transform = CGAffineTransform(translationX: 0, y: 0)
+				}.addCompletion { _ in
+					print("cloud white moved back")
+				}.start(after: 2.7)
+			
+			imageAnimationView2.dance.animate(duration: 2, curve: .easeInOut) {
+				$0.transform = CGAffineTransform(translationX: 0, y: 0)
+				}.addCompletion { _ in
+					print("cloud gray moved back")
+				}.start(after: 2.7)
+		}
     }
     
     // -- Core Animation
     private func displaySnow() {
-        summaryLabel.textColor = .snow
-        
-        // Generate Cloud
-        let cloudEmitter = WeatherEmitter.createEmitter(with: [#imageLiteral(resourceName: "cloud-particle-1"), #imageLiteral(resourceName: "cloud-particle-2")], type: .clouds)
-        cloudEmitter.emitterPosition = CGPoint(x: (view.frame.width / 2 - 65), y: 50)
-        cloudEmitter.emitterSize = CGSize(width: weatherAnimationView.frame.width / 2, height: 500)
-        
-        let cloudEmitter1 = WeatherEmitter.createEmitter(with: [#imageLiteral(resourceName: "cloud-particle-1"), #imageLiteral(resourceName: "cloud-particle-2")], type: .clouds, inversed: true)
-        cloudEmitter1.emitterPosition = CGPoint(x: (view.frame.width / 2 - 80), y: 60)
-        cloudEmitter1.emitterSize = CGSize(width: weatherAnimationView.frame.width / 2, height: 500)
-        
-        weatherAnimationView.layer.addSublayer(cloudEmitter)
-        weatherAnimationView.layer.addSublayer(cloudEmitter1)
-        
-        let emitter = WeatherEmitter.createEmitter(with: [#imageLiteral(resourceName: "snowflake-1"), #imageLiteral(resourceName: "snowflake-2"), #imageLiteral(resourceName: "snowflake-3")], type: .snowflakes)
-        
-        
-        emitter.emitterPosition = CGPoint(x: (view.frame.width / 2) - (weatherAnimationView.frame.width / 4), y: 60)
-        emitter.emitterSize = CGSize(width: weatherAnimationView.frame.width / 2, height: 2)
-        weatherAnimationView.layer.addSublayer(emitter)
-    }
+		for _ in 1...self.neededLayers {
+			summaryLabel.textColor = .snow
+		
+			// Generate Cloud
+			let cloudEmitter = WeatherEmitter.createEmitter(with: [#imageLiteral(resourceName: "cloud-particle-1"), #imageLiteral(resourceName: "cloud-particle-2")], type: .clouds)
+			cloudEmitter.emitterPosition = CGPoint(x: (view.frame.width / 2), y: 50)
+			cloudEmitter.emitterSize = CGSize(width: weatherAnimationView.frame.width / 2, height: 500)
+		
+			let cloudEmitter1 = WeatherEmitter.createEmitter(with: [#imageLiteral(resourceName: "cloud-particle-1"), #imageLiteral(resourceName: "cloud-particle-2")], type: .clouds, inversed: true)
+			cloudEmitter1.emitterPosition = CGPoint(x: (view.frame.width / 2 - 40), y: 60)
+			cloudEmitter1.emitterSize = CGSize(width: weatherAnimationView.frame.width / 2, height: 500)
+		
+			weatherAnimationView.layer.addSublayer(cloudEmitter)
+			weatherAnimationView.layer.addSublayer(cloudEmitter1)
+		
+			// Generate Snowflakes
+			let emitter = WeatherEmitter.createEmitter(with: [#imageLiteral(resourceName: "snowflake-1"), #imageLiteral(resourceName: "snowflake-2"), #imageLiteral(resourceName: "snowflake-3")], type: .snowflakes)
+			emitter.emitterPosition = CGPoint(x: (view.frame.width / 2), y: 60)
+			emitter.emitterSize = CGSize(width: weatherAnimationView.frame.width / 2, height: 2)
+		
+			weatherAnimationView.layer.addSublayer(emitter)
+		}
+	}
     
     // -- UIView Animations
     private func displaySun() {
-        summaryLabel.textColor = .sun
-        
-        let imageAnimationView = UIImageView(image: #imageLiteral(resourceName: "Sun"))
-        weatherAnimationView.addSubview(imageAnimationView)
-		imageAnimationView.contentMode = .scaleAspectFit
-		weatherAnimationView.contentMode = .scaleAspectFit
-		weatherAnimationView.addConstraintsWithFormat(format: "H:|[v0]|", views: imageAnimationView)
-		weatherAnimationView.addConstraintsWithFormat(format: "V:|[v0]|", views: imageAnimationView)
-		
-//		weatherAnimationView.alpha = 0
-		let rotation = CGAffineTransform(rotationAngle: 130 * (.pi / 180))
-		
-        UIView.animate(withDuration: 5,
-                       delay: 0,
-					   usingSpringWithDamping: 0.5,
-					   initialSpringVelocity: 1,
-                       options: [.autoreverse, .repeat],
-                       animations: {
-//						self.weatherAnimationView.alpha = 1
-                        self.weatherAnimationView.transform = rotation
-		}) { Void in
-			print("finished transform!")
+		for _ in 1...self.neededLayers {
+			summaryLabel.textColor = .sun
+			
+			let imageAnimationView = UIImageView(image: #imageLiteral(resourceName: "Sun"))
+			weatherAnimationView.addSubview(imageAnimationView)
+			imageAnimationView.contentMode = .scaleAspectFit
+			weatherAnimationView.contentMode = .scaleAspectFit
+			weatherAnimationView.addConstraintsWithFormat(format: "H:|[v0]|", views: imageAnimationView)
+			weatherAnimationView.addConstraintsWithFormat(format: "V:|[v0]|", views: imageAnimationView)
+			
+	//		weatherAnimationView.alpha = 0
+			let rotation = CGAffineTransform(rotationAngle: 130 * (.pi / 180))
+			
+			UIView.animate(withDuration: 5,
+						   delay: 0,
+						   usingSpringWithDamping: 0.5,
+						   initialSpringVelocity: 1,
+						   options: [.autoreverse, .repeat],
+						   animations: {
+	//						self.weatherAnimationView.alpha = 1
+							self.weatherAnimationView.transform = rotation
+			}) { Void in
+				print("finished transform!")
+			}
+	//
+	//		Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
+	//			print("Timer fired! Alpha looks like it's at 50%")
+	//			UIView.animate(withDuration: 5,
+	//						   delay: 0,
+	//						   options: [.beginFromCurrentState],
+	//						   animations: {
+	//							print("alpha: \(self.weatherAnimationView.alpha)")
+	//							self.weatherAnimationView.alpha = 0
+	//			}) { Void in
+	//				print("finished alpha!")
+	//			}
+	//		}
 		}
-//
-//		Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
-//			print("Timer fired! Alpha looks like it's at 50%")
-//			UIView.animate(withDuration: 5,
-//						   delay: 0,
-//						   options: [.beginFromCurrentState],
-//						   animations: {
-//							print("alpha: \(self.weatherAnimationView.alpha)")
-//							self.weatherAnimationView.alpha = 0
-//			}) { Void in
-//				print("finished alpha!")
-//			}
-//		}
-		
     }
 
     // -- Lottie
     private func displayWind() {
-        summaryLabel.textColor = .windy
+		for _ in 1...self.neededLayers {
+			summaryLabel.textColor = .windy
 
-        lottieAnimationView = LOTAnimationView(name: "windturbine")
-        lottieAnimationView?.frame = weatherAnimationView.frame
-        lottieAnimationView?.center = CGPoint(x: weatherAnimationView.frame.size.width / 2, y: weatherAnimationView.frame.size.height / 2)
-        self.weatherAnimationView.addSubview(lottieAnimationView!)
-        lottieAnimationView?.contentMode = UIViewContentMode.scaleAspectFit
-
-        lottieAnimationView?.loopAnimation = true
-        lottieAnimationView?.animationSpeed = 1.5
-
-        lottieAnimationView?.play()
-        
-        let lineEmitter = WeatherEmitter.createEmitter(with: [#imageLiteral(resourceName: "line-1")], type: .windlines)
-        lineEmitter.emitterPosition = CGPoint(x: -200, y: weatherAnimationView.frame.minY)
-        lineEmitter.emitterSize = CGSize(width: 300, height: 900)
-        
-        weatherAnimationView.layer.addSublayer(lineEmitter)
-        
-        let leaveEmitter = WeatherEmitter.createEmitter(with: [#imageLiteral(resourceName: "leaf-1"), #imageLiteral(resourceName: "leaf-2")], type: .leaves)
-        leaveEmitter.emitterPosition = CGPoint(x: -200, y: weatherAnimationView.frame.minY)
-        leaveEmitter.emitterSize = CGSize(width: 300, height: 900)
-        
-        weatherAnimationView.layer.addSublayer(leaveEmitter)
-    }
+			let lottieAnimationView = LOTAnimationView(name: "windturbine")
+			lottieAnimationView.frame = weatherAnimationView.frame
+			lottieAnimationView.center = CGPoint(x: weatherAnimationView.frame.size.width / 2,
+												  y: weatherAnimationView.frame.size.height / 2)
+			self.weatherAnimationView.addSubview(lottieAnimationView)
+			lottieAnimationView.contentMode = UIViewContentMode.scaleAspectFit
+			lottieAnimationView.loopAnimation = true
+			lottieAnimationView.animationSpeed = 1.5
+			lottieAnimationView.play()
+			
+			let lineEmitter = WeatherEmitter.createEmitter(with: [#imageLiteral(resourceName: "line-1")], type: .windlines)
+			lineEmitter.emitterPosition = CGPoint(x: -200, y: weatherAnimationView.frame.minY)
+			lineEmitter.emitterSize = CGSize(width: 300, height: 900)
+			
+			weatherAnimationView.layer.addSublayer(lineEmitter)
+			
+			let leafEmitter = WeatherEmitter.createEmitter(with: [#imageLiteral(resourceName: "leaf-1"), #imageLiteral(resourceName: "leaf-2")], type: .leaves)
+			leafEmitter.emitterPosition = CGPoint(x: -200, y: weatherAnimationView.frame.minY)
+			leafEmitter.emitterSize = CGSize(width: 300, height: 900)
+			
+			weatherAnimationView.layer.addSublayer(leafEmitter)
+			print(weatherAnimationView.layer.sublayers!.count)
+		}
+	}
 	
 	// MARK: - Rain (for comparison) -
 	// -- Lottie (Key Frames)
 	private func displayRain() {
-		for _ in 1...neededLayers {
+		for _ in 1...self.neededLayers {
 			summaryLabel.textColor = .rain
 			layerCount += 1
 			print("Added Lottie Layer. Total count: \(layerCount)")
 			
-			lottieAnimationView = LOTAnimationView(name: "rain")
-			lottieAnimationView?.loopAnimation = true
-			lottieAnimationView?.animationSpeed = 3
-			lottieAnimationView?.play()
+			let lottieAnimationView = LOTAnimationView(name: "rain")
+			lottieAnimationView.loopAnimation = true
+			lottieAnimationView.animationSpeed = 3
+			lottieAnimationView.play()
 			
 			// Set constraints and appearance
-			lottieAnimationView?.contentMode = .scaleAspectFit
-			self.weatherAnimationView.addSubview(lottieAnimationView!)
-			weatherAnimationView.addConstraintsWithFormat(format: "H:|[v0]|", views: lottieAnimationView!)
-			weatherAnimationView.addConstraintsWithFormat(format: "V:|[v0]|", views: lottieAnimationView!)
+			lottieAnimationView.contentMode = .scaleAspectFit
+			self.weatherAnimationView.addSubview(lottieAnimationView)
+			weatherAnimationView.addConstraintsWithFormat(format: "H:|[v0]|", views: lottieAnimationView)
+			weatherAnimationView.addConstraintsWithFormat(format: "V:|[v0]|", views: lottieAnimationView)
 			self.weatherAnimationView.contentMode = .scaleAspectFit
 		}
 	}
 	
 	// -- Rain with Core Animation
 	private func displayRainCoreAnimation() {
-		for _ in 1...neededLayers {
-            if let rainView = Bundle.main.loadNibNamed("RainCloudView", owner: self,options: nil)?.first as? RainCloud {
+		if let rainView = Bundle.main.loadNibNamed("RainCloudView", owner: self,options: nil)?.first as? RainCloud {
+			for _ in 1...self.neededLayers {
 				layerCount += 1
 				print("Added CA Layer. Total count: \(layerCount)")
 
@@ -384,14 +387,14 @@ class WeatherViewController: UIViewController {
 				translation.duration = 0.5
 				translation.byValue = [deltaX, deltaY]
 
-//				// ----
-//
-//				let mirror = CABasicAnimation(keyPath: #keyPath(CALayer.transform))
-//				let matrix = CATransform3DMakeScale(1, -1, 1)
-//				mirror.duration = 2
-//				mirror.toValue = NSValue(caTransform3D: matrix)
-//
-//				// ----
+	//				// ----
+	//
+	//				let mirror = CABasicAnimation(keyPath: #keyPath(CALayer.transform))
+	//				let matrix = CATransform3DMakeScale(1, -1, 1)
+	//				mirror.duration = 2
+	//				mirror.toValue = NSValue(caTransform3D: matrix)
+	//
+	//				// ----
 				
 				let fadeIn = CABasicAnimation(keyPath: "opacity")
 				fadeIn.duration = 0.5
@@ -456,36 +459,37 @@ class WeatherViewController: UIViewController {
 	
 	// -- Rain with UIView.animate()
 	private func displayRainUiView() {
-        for _ in 1...neededLayers {
 		if let rainView = Bundle.main.loadNibNamed("RainCloudView", owner: self, options: nil)?.first as? RainCloud {
-                weatherAnimationView.addSubview(rainView)
-                layerCount += 1
-                print("Added UIView Layer. Total count: \(layerCount)")
-                
-                // Constrain to center
-                constrain(rainView, weatherAnimationView) {rainView, weatherAnimationView in
-                    rainView.edges == weatherAnimationView.edges
-                }
-                
-                UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [.repeat, .autoreverse], animations: ({
-                    rainView.cloud.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
-                }))
-                
-                UIView.animate(withDuration: 0.6, delay: 0, options: [.curveLinear ,.repeat], animations: ({
-                    // Important: calculate deltas before transforming!
-                    let deltaX = rainView.dropletsBottom.center.x - rainView.dropletsCenter.center.x
-                    let deltaY =  rainView.dropletsBottom.center.y - rainView.dropletsCenter.center.y
-                    
-                    rainView.dropletsTop.center = rainView.dropletsCenter.center
-                    rainView.dropletsTop.alpha = 1
-                    
-                    rainView.dropletsCenter.center = rainView.dropletsBottom.center
-                    rainView.dropletsCenter.alpha = 0.5
-                    
-                    rainView.dropletsBottom.transform = CGAffineTransform(translationX: deltaX, y: deltaY)
-                    rainView.dropletsBottom.alpha = 0
-                }))
-            }
+			for _ in 1...self.neededLayers {
+
+				weatherAnimationView.addSubview(rainView)
+				layerCount += 1
+				print("Added UIView Layer. Total count: \(layerCount)")
+				
+				// Constrain to center
+				constrain(rainView, weatherAnimationView) {rainView, weatherAnimationView in
+					rainView.edges == weatherAnimationView.edges
+				}
+				
+				UIView.animateKeyframes(withDuration: 0.5, delay: 0, options: [.repeat, .autoreverse], animations: ({
+					rainView.cloud.transform = CGAffineTransform(scaleX: 1.1, y: 1.1)
+				}))
+				
+				UIView.animate(withDuration: 0.6, delay: 0, options: [.curveLinear ,.repeat], animations: ({
+					// Important: calculate deltas before transforming!
+					let deltaX = rainView.dropletsBottom.center.x - rainView.dropletsCenter.center.x
+					let deltaY =  rainView.dropletsBottom.center.y - rainView.dropletsCenter.center.y
+					
+					rainView.dropletsTop.center = rainView.dropletsCenter.center
+					rainView.dropletsTop.alpha = 1
+					
+					rainView.dropletsCenter.center = rainView.dropletsBottom.center
+					rainView.dropletsCenter.alpha = 0.5
+					
+					rainView.dropletsBottom.transform = CGAffineTransform(translationX: deltaX, y: deltaY)
+					rainView.dropletsBottom.alpha = 0
+				}))
+			}
 		}
 	}
 }

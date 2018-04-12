@@ -35,7 +35,7 @@
                                     <constraint firstAttribute="height" constant="1" id="nuF-C2-nrR"/>
                                 </constraints>
                             </view>
-                            <view alpha="0.75" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="xXc-XO-PPr">
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="xXc-XO-PPr">
                                 <rect key="frame" x="0.0" y="151" width="414" height="270"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="270" id="vqC-0h-xsY"/>

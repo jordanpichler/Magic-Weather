@@ -42,6 +42,7 @@
 		17B8850D1F9A6FA0002F1C9B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17487A111ECA3CDB004496BF /* AppDelegate.swift */; };
 		17B8850E1F9A7706002F1C9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17487A1A1ECA3CDB004496BF /* LaunchScreen.storyboard */; };
 		17F0F2FD1F9A4E5D00E8E16C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F0F2FC1F9A4E5D00E8E16C /* UIColor+Extension.swift */; };
+		7909611DB717432B36A83AF4 /* Pods_Magic_Weather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17B8850C1F9A6E0C002F1C9B /* Pods_Magic_Weather.framework */; };
 		A0B7B9EB6FAF3D5617516E5E /* Pods_Magic_Weather.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E1CE89DA0CAAD358E70F5E /* Pods_Magic_Weather.framework */; };
 		EC6C016FC9E864F856751F8D /* Pods_Magic_Weather_Stage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C39F50DE7E167A025240D86A /* Pods_Magic_Weather_Stage.framework */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A0B7B9EB6FAF3D5617516E5E /* Pods_Magic_Weather.framework in Frameworks */,
+				7909611DB717432B36A83AF4 /* Pods_Magic_Weather.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

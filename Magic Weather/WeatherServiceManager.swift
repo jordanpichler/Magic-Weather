@@ -11,7 +11,6 @@ import UIKit
 import SwiftyJSON
 import ForecastIO
 import CoreLocation
-import Alamofire
 
 class WeatherServiceManager: NSObject {
     let APIKey = "4c933d66c2e42e70a510aebcb45b2e6b"

@@ -1,5 +1,4 @@
 PODS:
-  - Alamofire (4.6.0)
   - Cartography (3.0.1)
   - Dance (1.0.7)
   - ForecastIO (4.0.0)
@@ -8,7 +7,6 @@ PODS:
   - SwiftyJSON (4.0.0)
 
 DEPENDENCIES:
-  - Alamofire
   - Cartography
   - Dance
   - ForecastIO
@@ -17,7 +15,6 @@ DEPENDENCIES:
   - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   Cartography: f8c899bb0f5cf20758644a8eea59a75e98a03a5d
   Dance: c770d6923252e9b0ffcce98cc1303c5ac504c319
   ForecastIO: d449959139efdc9a2c111a2dba691a67706bb619
@@ -25,6 +22,6 @@ SPEC CHECKSUMS:
   SSFadingScrollView: ac908f565594b1faa748d2d55973f2dde919f754
   SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
 
-PODFILE CHECKSUM: 1ed6f246f82f26a72a1454db9a7729139038ddb0
+PODFILE CHECKSUM: ab7d9058d389b51a1a29fab6d382664a38356deb
 
 COCOAPODS: 1.2.1
